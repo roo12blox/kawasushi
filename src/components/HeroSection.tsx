@@ -6,13 +6,13 @@ import { HeroVisual } from './DishVisual';
 
 interface HeroSectionProps {
   lang: Language;
-  onQuickAddDuo: () => void;
+  onQuickAddAssortimentC: () => void;
   onScrollToBooking: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   lang,
-  onQuickAddDuo,
+  onQuickAddAssortimentC,
   onScrollToBooking,
 }) => {
   return (
@@ -36,26 +36,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Display Headline */}
             <h1 className="font-display text-[clamp(2.35rem,4.2vw,3.85rem)] font-semibold leading-[1.06] tracking-tight text-[#141413] mb-5">
               {lang === 'fr'
-                ? 'L’art du sushi frais au cœur de Meknès.'
-                : 'Fresh handcrafted sushi in the heart of Meknès.'}
+                ? 'Kawa Sushi & Wok, l’art japonais au cœur de Meknès.'
+                : 'Kawa Sushi & Wok, Japanese culinary craft in Meknès.'}
             </h1>
 
             {/* Value Proposition */}
             <p className="text-base sm:text-[17px] leading-relaxed text-[#575652] max-w-[54ch] mb-8">
               {lang === 'fr'
-                ? 'Découvrez des saveurs uniques, des produits de qualité préparés à la minute et une expérience japonaise authentique. Commandez nos sushis, plateaux, nouilles sautées aux légumes et cocktails aux fruits sur place, à emporter ou en livraison.'
-                : 'Discover unique flavors, fresh ingredients prepared to order, and an authentic Japanese dining experience. Enjoy signature sushi platters, stir-fried vegetable noodles, and fresh fruit cocktails dine-in, takeaway, or delivered.'}
+                ? 'Poke Bowls, Tartares, California & Special Kawa Rolls, Pizza Sushi, Wok Bowls personnalisés, Assortiments jusqu’à 100 pièces et Mocktails maison. Sur place, à emporter ou en livraison.'
+                : 'Poke Bowls, Tartares, California & Special Kawa Rolls, Sushi Pizza, customizable Wok Bowls, Platters up to 100 pieces, and house Mocktails. Dine-in, takeaway, or delivery.'}
             </p>
           </div>
 
-          {/* Action Block: 1 Dominant Primary CTA + Quiet Secondary Links */}
+          {/* Action Block */}
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-4">
               <a
                 href="#menu"
                 className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 min-h-[44px] text-sm font-semibold text-white bg-[#B91C1C] hover:bg-[#991B1B] rounded-lg transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B91C1C]"
               >
-                <span>{lang === 'fr' ? 'Commander en ligne' : 'Order online'}</span>
+                <span>{lang === 'fr' ? 'Commander sur la carte' : 'Order from menu'}</span>
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </a>
 
@@ -86,9 +86,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
         </div>
 
-        {/* Right Column: Dominant 16:9 / Full-Height Visual Anchor */}
+        {/* Right Column: Dominant Visual Anchor */}
         <div className="lg:col-span-6">
-          <HeroVisual lang={lang} onQuickAddDuo={onQuickAddDuo} />
+          <HeroVisual lang={lang} onQuickAddAssortimentC={onQuickAddAssortimentC} />
         </div>
       </div>
 

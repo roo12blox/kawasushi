@@ -10,9 +10,9 @@ interface CartDrawerProps {
   fulfillment: FulfillmentMode;
   onChangeFulfillment: (mode: FulfillmentMode) => void;
   onClose: () => void;
-  onUpdateQty: (itemId: string, delta: number) => void;
-  onRemoveItem: (itemId: string) => void;
-  onAddItem: (item: MenuItem) => void;
+  onUpdateQty: (cartKey: string, delta: number) => void;
+  onRemoveItem: (cartKey: string) => void;
+  onAddItem: (item: MenuItem, selectedBase?: string) => void;
   onClearCart: () => void;
 }
 
@@ -48,8 +48,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const deliveryFee = needsDeliveryFee ? BUSINESS_INFO.deliveryFeeMad : 0;
   const total = subtotal + deliveryFee;
 
-  const hasDrink = cart.some((c) => c.item.category === 'cocktails');
-  const suggestedCocktail = MENU_ITEMS.find((m) => m.id === 'cocktail-fruits');
+  const hasDrink = cart.some((c) => c.item.category === 'desserts_drinks');
+  const suggestedMocktail = MENU_ITEMS.find((m) => m.id === 'mocktail-sakura-fresh');
 
   const handlePlaceOrder = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,7 +90,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         ? 'Vente à emporter'
         : 'Repas sur place';
     const lines = cart
-      .map((c) => `• ${c.quantity}x ${c.item.name.fr} (${c.item.priceMad * c.quantity} MAD)`)
+      .map(
+        (c) =>
+          `• ${c.quantity}x ${c.item.name.fr}${c.selectedBase ? ` (${c.selectedBase})` : ''} — ${
+            c.item.priceMad * c.quantity
+          } MAD`
+      )
       .join('\n');
 
     const summaryText = `Nouvelle commande Kawasushi #${orderId}\nMode : ${modeLabel}\nClient : ${customerName} (${customerPhone})${
@@ -186,8 +191,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </p>
               <p className="text-sm text-[#575652] max-w-xs mx-auto">
                 {lang === 'fr'
-                  ? 'Ajoutez des sushis frais, un plateau à partager ou nos nouilles sautées aux légumes.'
-                  : 'Add fresh sushi, a sharing platter, or our stir-fried vegetable noodles.'}
+                  ? 'Ajoutez nos Poke Bowls, California Rolls, Wok Bowls ou Assortiments Kawa.'
+                  : 'Add our Poke Bowls, California Rolls, Wok Bowls, or Kawa Platters.'}
               </p>
               <button
                 type="button"
@@ -225,15 +230,20 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
               {/* Cart Items List */}
               <div className="space-y-3">
-                {cart.map(({ item, quantity }) => (
+                {cart.map(({ cartKey, item, selectedBase, quantity }) => (
                   <div
-                    key={item.id}
+                    key={cartKey}
                     className="p-4 rounded-xl bg-white border border-black/[0.08] flex items-center justify-between gap-4"
                   >
                     <div className="min-w-0">
                       <p className="text-sm font-semibold text-[#141413] truncate">
                         {item.name[lang]}
                       </p>
+                      {selectedBase && (
+                        <p className="text-[11px] font-medium text-[#102B1F]">
+                          {selectedBase}
+                        </p>
+                      )}
                       <p className="font-mono text-xs tabular-nums text-[#575652] mt-0.5">
                         {item.priceMad} MAD × {quantity} ={' '}
                         <span className="text-[#141413] font-semibold">
@@ -246,7 +256,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       <div className="inline-flex items-center bg-[#EFEFEC] rounded-lg p-0.5">
                         <button
                           type="button"
-                          onClick={() => onUpdateQty(item.id, -1)}
+                          onClick={() => onUpdateQty(cartKey, -1)}
                           aria-label="Decrease quantity"
                           className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-black/10 text-[#141413] cursor-pointer"
                         >
@@ -257,7 +267,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         </span>
                         <button
                           type="button"
-                          onClick={() => onUpdateQty(item.id, 1)}
+                          onClick={() => onUpdateQty(cartKey, 1)}
                           aria-label="Increase quantity"
                           className="w-7 h-7 flex items-center justify-center rounded-md hover:bg-black/10 text-[#141413] cursor-pointer"
                         >
@@ -267,7 +277,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
                       <button
                         type="button"
-                        onClick={() => onRemoveItem(item.id)}
+                        onClick={() => onRemoveItem(cartKey)}
                         aria-label={`Remove ${item.name[lang]}`}
                         className="w-8 h-8 flex items-center justify-center text-[#575652] hover:text-[#B91C1C] cursor-pointer"
                       >
@@ -279,21 +289,21 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               </div>
 
               {/* Smart Drink Upsell */}
-              {!hasDrink && suggestedCocktail && (
+              {!hasDrink && suggestedMocktail && (
                 <div className="p-4 rounded-xl bg-[#EFEFEC] border border-black/[0.07] flex items-center justify-between gap-3">
                   <div>
                     <p className="text-xs font-semibold text-[#141413]">
                       {lang === 'fr'
-                        ? 'Compléter avec notre Cocktail Aux Fruits Frais'
-                        : 'Pair with our Fresh Fruit Cocktail'}
+                        ? 'Ajouter un Mocktail Sakura Fresh'
+                        : 'Add a Sakura Fresh Mocktail'}
                     </p>
                     <p className="font-mono text-xs text-[#575652] tabular-nums">
-                      + {suggestedCocktail.priceMad} MAD
+                      + {suggestedMocktail.priceMad} MAD
                     </p>
                   </div>
                   <button
                     type="button"
-                    onClick={() => onAddItem(suggestedCocktail)}
+                    onClick={() => onAddItem(suggestedMocktail)}
                     className="px-3 py-2 text-xs font-semibold text-white bg-[#141413] hover:bg-[#B91C1C] rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
                   >
                     + {lang === 'fr' ? 'Ajouter' : 'Add'}

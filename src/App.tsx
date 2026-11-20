@@ -10,18 +10,19 @@ import { MENU_ITEMS } from './data/menuData';
 import { CartItem, FulfillmentMode, Language, MenuItem } from './types/restaurant';
 
 const DUO_COMBO_ITEM: MenuItem = {
-  id: 'formule-duo-meknes',
-  category: 'plateaux',
-  visual: 'plateau_duo',
-  priceMad: 245,
-  pieces: 28,
+  id: 'formule-duo-kawa',
+  category: 'assortiments',
+  subCategory: { fr: 'Formule Duo', en: 'Duo Combo' },
+  visual: 'assort_c',
+  priceMad: 160,
+  pieces: 20,
   name: {
-    fr: 'Formule Duo Meknès (Plateau 28 pcs + 2 Cocktails)',
-    en: 'Meknès Duo Combo (28-pc Platter + 2 Cocktails)',
+    fr: 'Formule Duo Kawa (Assortiment C 20 pcs + 2 Sakura Fresh)',
+    en: 'Kawa Duo Combo (20-pc Platter C + 2 Sakura Fresh)',
   },
   description: {
-    fr: 'Plateau Duo 28 pièces et 2 Cocktails Aux Fruits Frais.',
-    en: '28-piece Duo Platter paired with 2 Fresh Fruit Cocktails.',
+    fr: 'Assortiment C 20 pièces et 2 Mocktails Sakura Fresh.',
+    en: '20-piece Platter C paired with 2 Sakura Fresh Mocktails.',
   },
 };
 
@@ -33,40 +34,41 @@ export default function App() {
 
   const totalCount = cart.reduce((sum, entry) => sum + entry.quantity, 0);
 
-  const handleAddItem = (item: MenuItem) => {
+  const handleAddItem = (item: MenuItem, selectedBase?: string) => {
+    const cartKey = selectedBase ? `${item.id}:${selectedBase}` : item.id;
     setCart((prev) => {
-      const existing = prev.find((c) => c.item.id === item.id);
+      const existing = prev.find((c) => c.cartKey === cartKey);
       if (existing) {
         return prev.map((c) =>
-          c.item.id === item.id ? { ...c, quantity: c.quantity + 1 } : c
+          c.cartKey === cartKey ? { ...c, quantity: c.quantity + 1 } : c
         );
       }
-      return [...prev, { item, quantity: 1 }];
+      return [...prev, { cartKey, item, selectedBase, quantity: 1 }];
     });
   };
 
-  const handleUpdateQty = (itemId: string, delta: number) => {
+  const handleUpdateQty = (cartKey: string, delta: number) => {
     setCart((prev) =>
       prev
         .map((c) =>
-          c.item.id === itemId ? { ...c, quantity: c.quantity + delta } : c
+          c.cartKey === cartKey ? { ...c, quantity: c.quantity + delta } : c
         )
         .filter((c) => c.quantity > 0)
     );
   };
 
-  const handleRemoveItem = (itemId: string) => {
-    setCart((prev) => prev.filter((c) => c.item.id !== itemId));
+  const handleRemoveItem = (cartKey: string) => {
+    setCart((prev) => prev.filter((c) => c.cartKey !== cartKey));
   };
 
   const handleClearCart = () => {
     setCart([]);
   };
 
-  const handleQuickAddDuo = () => {
-    const plateauDuo = MENU_ITEMS.find((m) => m.id === 'plateau-duo');
-    if (plateauDuo) {
-      handleAddItem(plateauDuo);
+  const handleQuickAddAssortimentC = () => {
+    const assortC = MENU_ITEMS.find((m) => m.id === 'assortiment-c');
+    if (assortC) {
+      handleAddItem(assortC);
       setCartOpen(true);
     }
   };
@@ -94,7 +96,7 @@ export default function App() {
       <main className="flex-1">
         <HeroSection
           lang={lang}
-          onQuickAddDuo={handleQuickAddDuo}
+          onQuickAddAssortimentC={handleQuickAddAssortimentC}
           onScrollToBooking={handleScrollToBooking}
         />
 
