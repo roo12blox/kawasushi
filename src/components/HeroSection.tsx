@@ -68,7 +68,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </button>
             </div>
 
-            <div className="flex items-center gap-3 text-xs text-[#575652] pt-1">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-[#575652] pt-1">
               <a
                 href={BUSINESS_INFO.phoneHref}
                 className="inline-flex items-center gap-1.5 font-mono tabular-nums text-[#141413] hover:text-[#B91C1C] transition-colors"
@@ -77,10 +77,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <span>{BUSINESS_INFO.phoneDisplay}</span>
               </a>
               <span aria-hidden="true">·</span>
+              <a
+                href={BUSINESS_INFO.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[#141413] hover:text-[#B91C1C] transition-colors"
+              >
+                WhatsApp
+              </a>
+              <span aria-hidden="true">·</span>
+              <a
+                href={BUSINESS_INFO.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-[#141413] hover:text-[#B91C1C] transition-colors"
+              >
+                {BUSINESS_INFO.instagramHandle}
+              </a>
+              <span aria-hidden="true">·</span>
               <span>
                 {lang === 'fr'
-                  ? 'Également disponible sur Glovo'
-                  : 'Also available on Glovo'}
+                  ? 'Disponible sur Glovo'
+                  : 'Available on Glovo'}
               </span>
             </div>
           </div>

@@ -92,23 +92,34 @@ export const LocationBookingSection: React.FC<LocationBookingSectionProps> = ({ 
 
             <div className="flex items-start gap-3 pt-4 border-t border-black/[0.06]">
               <Phone className="w-4 h-4 text-[#B91C1C] shrink-0 mt-1" aria-hidden="true" />
-              <div>
-                <p className="text-xs font-medium text-[#575652] mb-0.5">
-                  {lang === 'fr' ? 'Téléphone & WhatsApp' : 'Phone & WhatsApp'}
+              <div className="space-y-1">
+                <p className="text-xs font-medium text-[#575652]">
+                  {lang === 'fr' ? 'Téléphone, WhatsApp & Instagram' : 'Phone, WhatsApp & Instagram'}
                 </p>
-                <a
-                  href={BUSINESS_INFO.phoneHref}
-                  className="font-mono text-sm font-semibold tabular-nums text-[#141413] hover:text-[#B91C1C] transition-colors"
-                >
-                  {BUSINESS_INFO.phoneDisplay}
-                </a>
-                <p className="text-xs text-[#575652] mt-1">
+                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                  <a
+                    href={BUSINESS_INFO.phoneHref}
+                    className="font-mono text-sm font-semibold tabular-nums text-[#141413] hover:text-[#B91C1C] transition-colors"
+                  >
+                    {BUSINESS_INFO.phoneDisplay}
+                  </a>
+                  <span className="text-[#575652]" aria-hidden="true">·</span>
+                  <a
+                    href={BUSINESS_INFO.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-semibold text-[#141413] hover:text-[#B91C1C] transition-colors"
+                  >
+                    {BUSINESS_INFO.instagramHandle}
+                  </a>
+                </div>
+                <p className="text-xs text-[#575652]">
                   {lang === 'fr' ? BUSINESS_INFO.hoursFr : BUSINESS_INFO.hoursEn}
                 </p>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-black/[0.06] flex flex-wrap gap-3">
+            <div className="pt-4 border-t border-black/[0.06] flex flex-wrap gap-2.5">
               <a
                 href={BUSINESS_INFO.mapsUrl}
                 target="_blank"
@@ -120,12 +131,22 @@ export const LocationBookingSection: React.FC<LocationBookingSectionProps> = ({ 
               </a>
 
               <a
+                href={BUSINESS_INFO.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 min-h-[40px] text-xs font-semibold text-[#141413] border border-black/15 hover:border-black/35 rounded-lg transition-colors whitespace-nowrap shrink-0"
+              >
+                <span>{lang === 'fr' ? 'Commander sur WhatsApp' : 'WhatsApp Order'}</span>
+                <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+              </a>
+
+              <a
                 href={BUSINESS_INFO.glovoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2.5 min-h-[40px] text-xs font-semibold text-[#141413] border border-black/15 hover:border-black/35 rounded-lg transition-colors whitespace-nowrap shrink-0"
               >
-                <span>{lang === 'fr' ? 'Commander sur Glovo' : 'Order on Glovo'}</span>
+                <span>Glovo</span>
                 <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
               </a>
             </div>

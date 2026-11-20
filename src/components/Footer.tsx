@@ -34,6 +34,22 @@ export const Footer: React.FC<FooterProps> = ({ lang, onChangeLang }) => {
           <a href="#adresse" className="hover:text-[#141413] transition-colors">
             {lang === 'fr' ? 'Réserver' : 'Book'}
           </a>
+          <a
+            href={BUSINESS_INFO.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#141413] transition-colors"
+          >
+            {BUSINESS_INFO.instagramHandle}
+          </a>
+          <a
+            href={BUSINESS_INFO.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#141413] transition-colors"
+          >
+            Maps
+          </a>
 
           {/* Clean Bilingual Switcher */}
           <div className="inline-flex items-center border border-black/15 rounded-md overflow-hidden">

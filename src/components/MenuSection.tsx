@@ -369,6 +369,9 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
           role="dialog"
           aria-modal="true"
           aria-label={lang === 'fr' ? 'Fiches originales du menu' : 'Original menu sheets'}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setFlierOpen(false);
+          }}
         >
           <div className="relative w-full max-w-4xl max-h-[90vh] bg-[#F7F7F5] rounded-2xl overflow-hidden flex flex-col border border-black/15">
             <div className="px-6 py-4 bg-white border-b border-black/10 flex items-center justify-between">
@@ -390,12 +393,27 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                   key={sheet.id}
                   className="bg-white rounded-xl border border-black/10 overflow-hidden"
                 >
-                  <img
-                    src={sheet.src}
-                    alt={sheet.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-auto object-contain bg-[#0E3923]"
-                  />
+                  <div className="relative min-h-[220px] bg-[#0E3923] flex items-center justify-center">
+                    <img
+                      src={sheet.src}
+                      alt={sheet.title}
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement | null;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                      className="w-full h-auto object-contain bg-[#0E3923]"
+                    />
+                    <div
+                      style={{ display: 'none' }}
+                      className="p-6 text-center flex-col items-center justify-center gap-2 text-[#E8C57B]"
+                    >
+                      <BookOpen className="w-6 h-6" aria-hidden="true" />
+                      <span className="text-xs font-medium">{sheet.title}</span>
+                    </div>
+                  </div>
                   <figcaption className="px-4 py-2.5 text-xs font-medium text-[#575652]">
                     {sheet.title}
                   </figcaption>
