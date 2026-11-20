@@ -1,0 +1,6 @@
+{
+  "name": "Kawasushi Meknès — Restaurant Japonais",
+  "description": "Site officiel de Kawasushi à Meknès (Riad Ismailia). Commandez vos sushis frais, plateaux, nouilles sautées aux légumes et cocktails aux fruits sur place, à emporter ou en livraison.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
